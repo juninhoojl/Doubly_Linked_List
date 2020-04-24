@@ -67,6 +67,25 @@ void insere_fim(hnode * cabeca, int valor){
     return;
 }
 
+void insere_depois(hnode * cabeca, node * anterior, int valor){
+    
+    if(!anterior->next){ // Se ultimo
+        insere_fim(cabeca,valor);
+        
+    }else{
+        node * novo = (node*)malloc(sizeof(node));
+        novo->data = valor;
+        novo->prev = anterior->prev;
+        novo->next = anterior->next;
+        anterior->next = novo;
+        novo->next->prev = anterior;
+        cabeca->tam+=1;
+        
+    }
+    
+    return;
+}
+
 void mostra_lista(hnode * cabeca){
     
     struct Node * atual = cabeca->primeiro;
@@ -128,7 +147,7 @@ int main(int argc, const char * argv[]) {
     
     
     while(i++<10)<%
-        insere_inicio(lista, i);
+        insere_fim(lista, i);
     %>
     
     mostra_lista(lista);
@@ -137,6 +156,8 @@ int main(int argc, const char * argv[]) {
     
     printf("Tamanho = %d\n",busca_node(lista, 8)->next->data);
     
-
+    insere_depois(lista, busca_node(lista, 1), 88);
+    mostra_lista(lista);
+    
     return 0;
 }
