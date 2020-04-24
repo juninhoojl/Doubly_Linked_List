@@ -75,12 +75,31 @@ void insere_depois(hnode * cabeca, node * anterior, int valor){
     }else{
         node * novo = (node*)malloc(sizeof(node));
         novo->data = valor;
-        novo->prev = anterior->prev;
+        novo->prev = anterior;
         novo->next = anterior->next;
         anterior->next = novo;
-        novo->next->prev = anterior;
+        novo->next->prev = novo;
         cabeca->tam+=1;
+    }
+    
+    return;
+}
+
+void insere_antes(hnode * cabeca, node * proximo, int valor){
+    
+    
+    if(cabeca->primeiro == proximo){ // Se primeiro
+        insere_inicio(cabeca, valor);
+    }else{
+        node * novo = (node*)malloc(sizeof(node));
+        novo->data = valor;
+        novo->prev = proximo->prev;
+        novo->next = proximo;
         
+        proximo->prev->next = novo;
+        proximo->prev = novo;
+
+        cabeca->tam+=1;
     }
     
     return;
@@ -156,7 +175,10 @@ int main(int argc, const char * argv[]) {
     
     printf("Tamanho = %d\n",busca_node(lista, 8)->next->data);
     
-    insere_depois(lista, busca_node(lista, 1), 88);
+    insere_depois(lista, busca_node(lista, 10), 88);
+    mostra_lista(lista);
+    
+    insere_antes(lista, busca_node(lista, 11), 99);
     mostra_lista(lista);
     
     return 0;
