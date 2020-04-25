@@ -18,8 +18,8 @@ typedef struct Node {
 
 typedef struct Hnode {
     int tam;
-    struct Node * primeiro;
-    struct Node * ultimo;
+    struct Node * first;
+    struct Node * last;
 }hnode;
 
 
@@ -29,17 +29,17 @@ void insere_inicio(hnode * cabeca, int valor){
   
     novo->data = valor;
     novo->prev = NULL;
-    novo->next = cabeca->primeiro;
+    novo->next = cabeca->first;
     
-    if (cabeca->primeiro){
-        cabeca->primeiro->prev = novo;
+    if (cabeca->first){
+        cabeca->first->prev = novo;
     }
     
     if (cabeca->tam == 0){
-        cabeca->ultimo = novo;
+        cabeca->last = novo;
     }
     
-    cabeca->primeiro = novo;
+    cabeca->first = novo;
     cabeca->tam+=1;
     
 }
@@ -51,17 +51,17 @@ void insere_fim(hnode * cabeca, int valor){
     
     novo->data = valor;
     novo->next = NULL;
-    novo->prev = cabeca->ultimo;
+    novo->prev = cabeca->last;
     
-    if (cabeca->ultimo){
-        cabeca->ultimo->next = novo;
+    if (cabeca->last){
+        cabeca->last->next = novo;
     }
     
     if (cabeca->tam == 0){
-        cabeca->primeiro = novo;
+        cabeca->first = novo;
     }
     
-    cabeca->ultimo = novo;
+    cabeca->last = novo;
     cabeca->tam+=1;
     
     return;
@@ -88,7 +88,7 @@ void insere_depois(hnode * cabeca, node * anterior, int valor){
 void insere_antes(hnode * cabeca, node * proximo, int valor){
     
     
-    if(cabeca->primeiro == proximo){ // Se primeiro
+    if(cabeca->first == proximo){ // Se primeiro
         insere_inicio(cabeca, valor);
     }else{
         node * novo = (node*)malloc(sizeof(node));
@@ -107,7 +107,7 @@ void insere_antes(hnode * cabeca, node * proximo, int valor){
 
 void mostra_lista(hnode * cabeca){
     
-    struct Node * atual = cabeca->primeiro;
+    struct Node * atual = cabeca->first;
     
     printf("Lista tamanho = %d\n", cabeca->tam);
 
@@ -117,7 +117,7 @@ void mostra_lista(hnode * cabeca){
         atual = atual->next;
     }
     
-    atual = cabeca->ultimo;
+    atual = cabeca->last;
     
     printf("\nInvertido:\n");
     while(atual){
@@ -133,7 +133,7 @@ void mostra_lista(hnode * cabeca){
 
 node * busca_node(hnode * cabeca, int valor){
     
-    struct Node * atual = cabeca->primeiro;
+    struct Node * atual = cabeca->first;
 
     while(atual && atual->data!=valor){
         atual = atual->next;
@@ -150,8 +150,8 @@ node * busca_node(hnode * cabeca, int valor){
 
 hnode * inicia_lista(){
     hnode * novo = (hnode *)malloc(sizeof(hnode));
-    novo->primeiro = NULL;
-    novo->ultimo = NULL;
+    novo->first = NULL;
+    novo->last = NULL;
     novo->tam = 0;
     return novo;
 }
