@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
   
-// A linked list node
 typedef struct Node {
     int data;
     struct Node * next;
@@ -23,7 +22,10 @@ typedef struct Hnode {
 }hnode;
 
 
-void insere_inicio(hnode * cabeca, int valor){
+
+
+
+void insert_beggining(hnode * cabeca, int valor){
 
     node * novo = (node*)malloc(sizeof(node));
   
@@ -42,10 +44,56 @@ void insere_inicio(hnode * cabeca, int valor){
     cabeca->first = novo;
     cabeca->tam+=1;
     
+    return;
 }
 
 
-void insere_fim(hnode * cabeca, int valor){
+void remove_all(hnode * cabeca){
+    
+    struct Node * atual = cabeca->first;
+    struct Node * aux = NULL;
+    
+    while(atual){
+        aux = atual;
+        atual = atual->prev;
+        free(aux);
+    }
+    
+    cabeca->first = NULL;
+    cabeca->last = NULL;
+    cabeca->tam = 0;
+    
+    return;
+}
+
+void remove_node(hnode * cabeca, node * nremove){
+
+    if(cabeca->first == nremove){ // Se primeiro
+        
+        cabeca->first = nremove->next;
+        nremove->next->prev = NULL;
+        
+    }else if(cabeca->last == nremove){ // Se ultimo
+        
+        cabeca->last = nremove->prev;
+        nremove->prev->next = NULL;
+        
+    }else{
+        
+        nremove->prev->next = nremove->next;
+        nremove->next->prev = nremove->prev;
+        
+    }
+    
+    free(nremove);
+    
+    cabeca->tam-=1;
+    
+    return;
+}
+
+
+void insert_end(hnode * cabeca, int valor){
     
     node * novo = (node*)malloc(sizeof(node));
     
@@ -67,10 +115,10 @@ void insere_fim(hnode * cabeca, int valor){
     return;
 }
 
-void insere_depois(hnode * cabeca, node * anterior, int valor){
+void insert_after(hnode * cabeca, node * anterior, int valor){
     
     if(!anterior->next){ // Se ultimo
-        insere_fim(cabeca,valor);
+        insert_end(cabeca,valor);
         
     }else{
         node * novo = (node*)malloc(sizeof(node));
@@ -85,11 +133,11 @@ void insere_depois(hnode * cabeca, node * anterior, int valor){
     return;
 }
 
-void insere_antes(hnode * cabeca, node * proximo, int valor){
+void insert_before(hnode * cabeca, node * proximo, int valor){
     
     
     if(cabeca->first == proximo){ // Se primeiro
-        insere_inicio(cabeca, valor);
+        insert_beggining(cabeca, valor);
     }else{
         node * novo = (node*)malloc(sizeof(node));
         novo->data = valor;
@@ -105,7 +153,7 @@ void insere_antes(hnode * cabeca, node * proximo, int valor){
     return;
 }
 
-void mostra_lista(hnode * cabeca){
+void show_list(hnode * cabeca){
     
     struct Node * atual = cabeca->first;
     
@@ -131,7 +179,7 @@ void mostra_lista(hnode * cabeca){
 }
 
 
-node * busca_node(hnode * cabeca, int valor){
+node * search_node(hnode * cabeca, int valor){
     
     struct Node * atual = cabeca->first;
 
@@ -146,9 +194,25 @@ node * busca_node(hnode * cabeca, int valor){
     return NULL;
 }
 
+void insert_sorting(hnode * cabeca, int valor){
+    
+    // Caminha ate achar alg
+    struct Node * atual = cabeca->first;
+    
+    if(!atual || atual->data >= valor){// Se vazia insere no comeco
+        insert_beggining(cabeca, valor);
+        printf("Insere Inicio\n");
+    }else{
+        while(atual->next!=NULL && atual->next->data < valor){
+            atual = atual->next;
+        }
+        insert_after(cabeca, atual, valor);
+    }
+    
+    return;
+}
 
-
-hnode * inicia_lista(){
+hnode * initialize_list(){
     hnode * novo = (hnode *)malloc(sizeof(hnode));
     novo->first = NULL;
     novo->last = NULL;
@@ -158,28 +222,49 @@ hnode * inicia_lista(){
 
 int main(int argc, const char * argv[]) {
     
-    hnode * lista = inicia_lista();
+    hnode * lista = initialize_list();
     
     printf("Tamanho inicial = %d\n",lista->tam);
     
     int i = 0;
     
-    
+    int aleatorios[10]={5,7,1,2,9,4,3,6,8,0};
+    int aleatorios2[10]={-5,3,16,-2,5,4,3,6,8,0};
     while(i++<10)<%
-        insere_fim(lista, i);
+        insert_end(lista, i);
     %>
     
-    mostra_lista(lista);
-    insere_fim(lista, 11);
-    mostra_lista(lista);
+    show_list(lista);
+    insert_end(lista, 11);
+    show_list(lista);
     
-    printf("Tamanho = %d\n",busca_node(lista, 8)->next->data);
+    printf("Tamanho = %d\n",search_node(lista, 8)->next->data);
     
-    insere_depois(lista, busca_node(lista, 10), 88);
-    mostra_lista(lista);
+    insert_after(lista, search_node(lista, 10), 88);
+    show_list(lista);
     
-    insere_antes(lista, busca_node(lista, 11), 99);
-    mostra_lista(lista);
+    insert_before(lista, search_node(lista, 11), 99);
+    show_list(lista);
+    
+    remove_node(lista, search_node(lista, 3));
+    show_list(lista);
+    
+    remove_all(lista);
+    show_list(lista);
+    
+    for (i=0; i<10; i++){
+        insert_sorting(lista, aleatorios[i]);
+        printf("Valor = %d\n",aleatorios[i]);
+    }
+    
+     show_list(lista);
+    
+    for (i=0; i<10; i++){
+        insert_sorting(lista, aleatorios2[i]);
+        printf("Valor = %d\n",aleatorios2[i]);
+    }
+    
+     show_list(lista);
     
     return 0;
 }

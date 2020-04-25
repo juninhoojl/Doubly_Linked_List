@@ -2,7 +2,7 @@
 
 ![Drag Racing](DoublyLinkedList.png)
 
-## Strcut Node (node)
+## Struct Node (node)
 ```c
 typedef struct Node {
     int data;
