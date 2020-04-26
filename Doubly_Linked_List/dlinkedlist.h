@@ -24,17 +24,22 @@ typedef struct Hnode {
     struct Node * last;
 }hnode;
 
-void insert_beggining(hnode * cabeca, int valor);
+void insert_beggining(hnode * cabeca, node * newnode);
+void insert_end(hnode * cabeca, node * newnode);
+void insert_after(hnode * cabeca, node * anterior, node * newnode);
+void insert_before(hnode * cabeca, node * proximo, node * newnode);
+void insert_sorting(hnode * cabeca, node * newnode);
+
 void remove_all(hnode * cabeca);
 void remove_node(hnode * cabeca, node * nremove);
-void insert_end(hnode * cabeca, int valor);
-void insert_after(hnode * cabeca, node * anterior, int valor);
-void insert_before(hnode * cabeca, node * proximo, int valor);
 void show_list(hnode * cabeca);
-node * search_node(hnode * cabeca, int valor);
-void insert_sorting(hnode * cabeca, int valor);
+
+
 hnode * initialize_list(void);
-
-
-
+// 1-Primeiro maior 0-Iguais 1-Segundo maior
+int compare_node(node * first, node * second);
+// Novo node
+node * new_node(int valor);
+// buca node
+node * search_node(hnode * cabeca, int valor);
 #endif /* dlinkedlist_h */

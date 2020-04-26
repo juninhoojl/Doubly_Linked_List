@@ -8,23 +8,52 @@
 
 #include "dlinkedlist.h"
 
-void insert_beggining(hnode * cabeca, int valor){
+// 1-Primeiro maior 0-Iguais 1-Segundo maior
+int compare_node(node * first, node * second){
+    
+    if(first->data > second->data){
+        return 1;
+        
+    }else if(first->data < second->data){
+        return -1;
+        
+    }
+    
+    return 0; // Iguais
+}
 
-    node * novo = (node*)malloc(sizeof(node));
-  
-    novo->data = valor;
-    novo->prev = NULL;
-    novo->next = cabeca->first;
+node * new_node(int valor){
+    
+    node * newnode = (node*)malloc(sizeof(node));
+    
+    if(!newnode){
+        printf("Memory allocation failed");
+        exit(1);
+    }
+    
+    newnode->data = valor;
+    newnode->prev = NULL;
+    newnode->next = NULL;
+    
+    return newnode;
+}
+
+
+void insert_beggining(hnode * cabeca, node * newnode){
+
+    //node * novo = new_node(valor);
+    //novo->data = valor;
+    newnode->next = cabeca->first;
     
     if (cabeca->first){
-        cabeca->first->prev = novo;
+        cabeca->first->prev = newnode;
     }
     
-    if (cabeca->tam == 0){
-        cabeca->last = novo;
+    if (!cabeca->first){ // Se vazia
+        cabeca->last = newnode;
     }
     
-    cabeca->first = novo;
+    cabeca->first = newnode;
     cabeca->tam+=1;
     
     return;
@@ -76,59 +105,56 @@ void remove_node(hnode * cabeca, node * nremove){
 }
 
 
-void insert_end(hnode * cabeca, int valor){
+void insert_end(hnode * cabeca, node * newnode){
     
-    node * novo = (node*)malloc(sizeof(node));
-    
-    novo->data = valor;
-    novo->next = NULL;
-    novo->prev = cabeca->last;
+    //node * novo = new_node(valor);
+    //novo->data = valor;
+    newnode->prev = cabeca->last;
     
     if (cabeca->last){
-        cabeca->last->next = novo;
+        cabeca->last->next = newnode;
     }
     
-    if (cabeca->tam == 0){
-        cabeca->first = novo;
+    if (!cabeca->first){
+        cabeca->first = newnode;
     }
     
-    cabeca->last = novo;
+    cabeca->last = newnode;
     cabeca->tam+=1;
     
     return;
 }
 
-void insert_after(hnode * cabeca, node * anterior, int valor){
+void insert_after(hnode * cabeca, node * anterior, node * newnode){
     
     if(!anterior->next){ // Se ultimo
-        insert_end(cabeca,valor);
+        insert_end(cabeca,newnode);
         
     }else{
-        node * novo = (node*)malloc(sizeof(node));
-        novo->data = valor;
-        novo->prev = anterior;
-        novo->next = anterior->next;
-        anterior->next = novo;
-        novo->next->prev = novo;
+        //node * novo = new_node(valor);
+        //novo->data = valor;
+        newnode->prev = anterior;
+        newnode->next = anterior->next;
+        anterior->next = newnode;
+        newnode->next->prev = newnode;
         cabeca->tam+=1;
     }
     
     return;
 }
 
-void insert_before(hnode * cabeca, node * proximo, int valor){
-    
+void insert_before(hnode * cabeca, node * proximo, node * newnode){
     
     if(cabeca->first == proximo){ // Se primeiro
-        insert_beggining(cabeca, valor);
+        insert_beggining(cabeca, newnode);
     }else{
-        node * novo = (node*)malloc(sizeof(node));
-        novo->data = valor;
-        novo->prev = proximo->prev;
-        novo->next = proximo;
+        //node * novo = new_node(valor);
+        //novo->data = valor;
+        newnode->prev = proximo->prev;
+        newnode->next = proximo;
         
-        proximo->prev->next = novo;
-        proximo->prev = novo;
+        proximo->prev->next = newnode;
+        proximo->prev = newnode;
 
         cabeca->tam+=1;
     }
@@ -177,19 +203,24 @@ node * search_node(hnode * cabeca, int valor){
     return NULL;
 }
 
-void insert_sorting(hnode * cabeca, int valor){
+void insert_sorting(hnode * cabeca, node * newnode){
     
     // Caminha ate achar alg
     struct Node * atual = cabeca->first;
     
-    if(!atual || atual->data >= valor){// Se vazia insere no comeco
-        insert_beggining(cabeca, valor);
+    // 1 primeiro maior
+    // -1 segundo maior
+    // 0 iguais
+
+    if(!atual || compare_node(atual, newnode) == 0 || compare_node(atual, newnode) == 1){
+        // Se vazia ou menor insere no comeco
+        insert_beggining(cabeca, newnode);
         printf("Insere Inicio\n");
     }else{
-        while(atual->next!=NULL && atual->next->data < valor){
+        while(atual->next!=NULL && compare_node(atual->next, newnode) == -1){
             atual = atual->next;
         }
-        insert_after(cabeca, atual, valor);
+        insert_after(cabeca, atual, newnode);
     }
     
     return;

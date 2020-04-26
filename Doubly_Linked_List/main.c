@@ -20,19 +20,19 @@ int main(int argc, const char * argv[]) {
     int aleatorios[10]={5,7,1,2,9,4,3,6,8,0};
     int aleatorios2[10]={-5,3,16,-2,5,4,-33,6,87,0};
     while(i++<10)<%
-        insert_end(lista, i);
+        insert_end(lista, new_node(i));
     %>
     
     show_list(lista);
-    insert_end(lista, 11);
+    insert_end(lista, new_node(11));
     show_list(lista);
     
     printf("Tamanho = %d\n",search_node(lista, 8)->next->data);
     
-    insert_after(lista, search_node(lista, 10), 88);
+    insert_after(lista, search_node(lista, 10), new_node(88));
     show_list(lista);
     
-    insert_before(lista, search_node(lista, 11), 99);
+    insert_before(lista, search_node(lista, 11), new_node(99));
     show_list(lista);
     
     remove_node(lista, search_node(lista, 3));
@@ -42,14 +42,14 @@ int main(int argc, const char * argv[]) {
     show_list(lista);
     
     for (i=0; i<10; i++){
-        insert_sorting(lista, aleatorios[i]);
+        insert_sorting(lista, new_node(aleatorios[i]));
         printf("Valor = %d\n",aleatorios[i]);
     }
     
-     show_list(lista);
+    show_list(lista);
     
     for (i=0; i<10; i++){
-        insert_sorting(lista, aleatorios2[i]);
+        insert_sorting(lista, new_node(aleatorios2[i]));
         printf("Valor = %d\n",aleatorios2[i]);
     }
     
@@ -57,7 +57,3 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
-
-
-
