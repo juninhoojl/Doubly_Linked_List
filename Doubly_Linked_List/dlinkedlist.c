@@ -8,6 +8,39 @@
 
 #include "dlinkedlist.h"
 
+
+void swap_nodes(node * first, node * second){
+    
+    node * aux = NULL;
+    
+    aux = first->next;
+    first->next = second->next;
+    second->next = aux;
+    
+    aux = first->prev;
+    first->prev = second->prev;
+    second->prev = aux;
+    
+    // Verificar se nao eh null agora
+    if(first->next){
+        first->next->prev = first;
+    }
+    
+    if(first->prev){
+        first->prev->next = first;
+    }
+    
+    if(second->next){
+        second->next->prev = second;
+    }
+    
+    if(second->prev){
+        second->prev->next = second;
+    }
+    
+    return;
+}
+
 // 1-Primeiro maior 0-Iguais 1-Segundo maior
 int compare_node(node * first, node * second){
     

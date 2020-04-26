@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "dlinkedlist.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[]){
     
     hnode * lista = initialize_list();
     
@@ -53,7 +53,9 @@ int main(int argc, const char * argv[]) {
         printf("Valor = %d\n",aleatorios2[i]);
     }
     
-     show_list(lista);
+    show_list(lista);
+    swap_nodes(search_node(lista, 87), search_node(lista, -33));
+    show_list(lista);
     
     return 0;
 }
