@@ -62,7 +62,7 @@ int main(int argc, const char * argv[]){
     show_list(lista);
     swap_nodes(lista, search_node(lista, 2), search_node(lista, 9));
     show_list(lista);
-    //bubbleSort(lista);
-    
+    bubbleSort(lista);
+
     return 0;
 }

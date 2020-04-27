@@ -8,78 +8,10 @@
 
 #include "dlinkedlist.h"
 
-//void bubbleSort(hnode * cabeca){
-//
-//    node * start = cabeca->first;
-//    int swapped;
-//
-//    node * lptr = NULL;
-//
-//    /* Checking for empty list */
-//    if (start == NULL){
-//        return;
-//    }
-//
-//    do{
-//        swapped = 0;
-//
-//
-//        while (start->next != lptr)
-//        {
-//            if (compare_node(start, start->next) == 1)
-//            {
-//                swap_nodes(start, start->next);
-//                swapped = 1;
-//            }
-//            start = start->next;
-//        }
-//        lptr = start;
-//    // Se nao houve troca para
-//    }while(swapped);
-//
-//    return;
-//}
-
-
 void show_node(node * no){
     printf(" %d ", no->data);
     return;
 }
-
-
-void bubbleSort(hnode * cabeca){
-
-    node * atual = cabeca->first;
-    node * aux = NULL;
-    
-    printf("\nBubble\n");
-
-    while(atual){
-        aux = atual;
-        
-        while(aux){
-            show_node(aux);
-            
-//            if (compare_node(aux, aux->next) && aux->next){
-//                swap_nodes(aux, aux->next);
-//            // Se troca continua o endereco do primeiro
-//            }else{
-//
-//            }
-            aux = aux->next;
-            
-         
-            
-        }
-        printf("\n");
-        //atual = aux->next;
-        atual = atual->next;
-    }
-    
-    
-    return;
-}
-
 
 void swap_nodes(hnode * cabeca, node * first, node * second){
 
@@ -100,20 +32,8 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
         cabeca->first = first;
     }
     
-    // Aqui esta ok
-    
 
-    // Aqui tambem esta ok
-    
-    // Nao pode apontar para ele mesmo // Esse é o problema
-    
-    // Confere se esta assim: first -> second, se sim
-    // o next do first nao pode apontar ele mesmo
-    // o prev do second nao pode apontar ele mesmo
-
-    
     if (first->next != second && second->next != first){ // Nao sao vizinhos
-        printf("Nao tem vizinhos\n");
         
         if(first->prev){
             first->prev->next = second;
@@ -138,9 +58,7 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
         second->prev = aux3;
         
     }else if(first->next == second){ //segundo é vizinho direito
-        
-        printf("Segundo depois do direito\n");
-        
+
         if(first->prev){ // Se nao eh nulo
             first->prev->next = second;
         }
@@ -156,15 +74,11 @@ void swap_nodes(hnode * cabeca, node * first, node * second){
         
         
     }else if(second->next == first){ // Segundo eh vizinho esquerdo
-        printf("Segundo antes do direito\n");
-        
      // se existe algum depois do primerio o anterior dele aponta para o segundo
- 
         
         if(first->next){
             first->next->prev = second;
         }
-        
         
         if(second->prev){
             second->prev->next = first;
