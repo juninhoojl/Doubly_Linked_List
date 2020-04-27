@@ -30,7 +30,7 @@ int Particiona(int *v, int inicio, int fim);
 
 void quickSort(int *v, int inicio, int fim);
 
-
+void bubbleSort(hnode * cabeca);
 
 void insert_beggining(hnode * cabeca, node * newnode);
 void insert_end(hnode * cabeca, node * newnode);
@@ -38,12 +38,12 @@ void insert_after(hnode * cabeca, node * anterior, node * newnode);
 void insert_before(hnode * cabeca, node * proximo, node * newnode);
 void insert_sorting(hnode * cabeca, node * newnode);
 
-void swap_nodes(node * first, node * second);
+void swap_nodes(hnode * cabeca, node * first, node * second);
 
 void remove_all(hnode * cabeca);
 void remove_node(hnode * cabeca, node * nremove);
 void show_list(hnode * cabeca);
-
+void show_node(node * no);
 
 hnode * initialize_list(void);
 // 1-Primeiro maior 0-Iguais 1-Segundo maior

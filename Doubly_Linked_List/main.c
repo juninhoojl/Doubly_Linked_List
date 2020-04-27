@@ -18,7 +18,7 @@ int main(int argc, const char * argv[]){
     int i = 0;
     
     int aleatorios[10]={5,7,1,2,9,4,3,6,8,0};
-    int aleatorios2[10]={-5,3,16,-2,5,4,-33,6,87,0};
+    //int aleatorios2[10]={-5,3,16,-2,5,4,-33,6,87,0};
     while(i++<10)<%
         insert_end(lista, new_node(i));
     %>
@@ -48,14 +48,21 @@ int main(int argc, const char * argv[]){
     
     show_list(lista);
     
-    for (i=0; i<10; i++){
-        insert_sorting(lista, new_node(aleatorios2[i]));
-        printf("Valor = %d\n",aleatorios2[i]);
-    }
+    //swap_nodes(lista, search_node(lista, 0), search_node(lista, 2));
+    //show_list(lista);
     
+    swap_nodes(lista, search_node(lista, 1), search_node(lista, 3));
+     show_list(lista);
+    swap_nodes(lista, search_node(lista, 3), search_node(lista, 4));
+    //bubbleSort(lista);
     show_list(lista);
-    swap_nodes(search_node(lista, 87), search_node(lista, -33));
+    swap_nodes(lista, search_node(lista, 3), search_node(lista, 4));
     show_list(lista);
+    swap_nodes(lista, search_node(lista, 0), search_node(lista, 2));
+    show_list(lista);
+    swap_nodes(lista, search_node(lista, 2), search_node(lista, 9));
+    show_list(lista);
+    //bubbleSort(lista);
     
     return 0;
 }

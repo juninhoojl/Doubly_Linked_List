@@ -8,35 +8,176 @@
 
 #include "dlinkedlist.h"
 
+//void bubbleSort(hnode * cabeca){
+//
+//    node * start = cabeca->first;
+//    int swapped;
+//
+//    node * lptr = NULL;
+//
+//    /* Checking for empty list */
+//    if (start == NULL){
+//        return;
+//    }
+//
+//    do{
+//        swapped = 0;
+//
+//
+//        while (start->next != lptr)
+//        {
+//            if (compare_node(start, start->next) == 1)
+//            {
+//                swap_nodes(start, start->next);
+//                swapped = 1;
+//            }
+//            start = start->next;
+//        }
+//        lptr = start;
+//    // Se nao houve troca para
+//    }while(swapped);
+//
+//    return;
+//}
 
-void swap_nodes(node * first, node * second){
-    
+
+void show_node(node * no){
+    printf(" %d ", no->data);
+    return;
+}
+
+
+void bubbleSort(hnode * cabeca){
+
+    node * atual = cabeca->first;
     node * aux = NULL;
     
-    aux = first->next;
-    first->next = second->next;
-    second->next = aux;
-    
-    aux = first->prev;
-    first->prev = second->prev;
-    second->prev = aux;
-    
-    // Verificar se nao eh null agora
-    if(first->next){
-        first->next->prev = first;
+    printf("\nBubble\n");
+
+    while(atual){
+        aux = atual;
+        
+        while(aux){
+            show_node(aux);
+            
+//            if (compare_node(aux, aux->next) && aux->next){
+//                swap_nodes(aux, aux->next);
+//            // Se troca continua o endereco do primeiro
+//            }else{
+//
+//            }
+            aux = aux->next;
+            
+         
+            
+        }
+        printf("\n");
+        //atual = aux->next;
+        atual = atual->next;
     }
     
-    if(first->prev){
-        first->prev->next = first;
+    
+    return;
+}
+
+
+void swap_nodes(hnode * cabeca, node * first, node * second){
+
+    node * aux = first->next;
+    node * aux2 = second->prev;
+    node * aux3 = first->prev;
+    node * aux4 = second->next;
+
+    if (!first->next){ // Ultimo
+        cabeca->last = second;
+    }else if (!first->prev){ // Primeiro
+        cabeca->first = second;
     }
     
-    if(second->next){
-        second->next->prev = second;
+    if (!second->next){ // Ultimo
+        cabeca->last = first;
+    }else if (!second->prev){ // Primeiro
+        cabeca->first = first;
     }
     
-    if(second->prev){
-        second->prev->next = second;
+    // Aqui esta ok
+    
+
+    // Aqui tambem esta ok
+    
+    // Nao pode apontar para ele mesmo // Esse é o problema
+    
+    // Confere se esta assim: first -> second, se sim
+    // o next do first nao pode apontar ele mesmo
+    // o prev do second nao pode apontar ele mesmo
+
+    
+    if (first->next != second && second->next != first){ // Nao sao vizinhos
+        printf("Nao tem vizinhos\n");
+        
+        if(first->prev){
+            first->prev->next = second;
+        }
+        
+        if(first->next){
+            first->next->prev = second;
+        }
+        
+        if(second->next){
+            second->next->prev = first;
+        }
+
+        if(second->prev){
+            second->prev->next = first;
+        }
+        
+        first->next = aux4;
+        second->next = aux;
+        
+        first->prev = aux2;
+        second->prev = aux3;
+        
+    }else if(first->next == second){ //segundo é vizinho direito
+        
+        printf("Segundo depois do direito\n");
+        
+        if(first->prev){ // Se nao eh nulo
+            first->prev->next = second;
+        }
+        
+        if(second->next){
+            second->next->prev = first;
+        }
+
+        second->next = first;
+        first->prev = second;
+        second->prev = aux3;
+        first->next = aux4;
+        
+        
+    }else if(second->next == first){ // Segundo eh vizinho esquerdo
+        printf("Segundo antes do direito\n");
+        
+     // se existe algum depois do primerio o anterior dele aponta para o segundo
+ 
+        
+        if(first->next){
+            first->next->prev = second;
+        }
+        
+        
+        if(second->prev){
+            second->prev->next = first;
+        }
+        
+        second->prev = first;
+        second->next = aux4;
+        first->prev = aux2;
+        first->next = second;
+        
     }
+    
+    
     
     return;
 }
@@ -199,21 +340,22 @@ void show_list(hnode * cabeca){
     
     struct Node * atual = cabeca->first;
     
-    printf("Lista tamanho = %d\n", cabeca->tam);
+    //printf("Lista tamanho = %d\n", cabeca->tam);
 
-    printf("Normal:\n");
     while(atual){
-        printf("%d ", atual->data);
+        show_node(atual);
+        //printf("%d ", atual->data);
         atual = atual->next;
     }
     
     atual = cabeca->last;
     
-    printf("\nInvertido:\n");
-    while(atual){
-        printf("%d ", atual->data);
-        atual = atual->prev;
-    }
+//    printf("\nInvertido:\n");
+//    while(atual){
+//        show_node(atual);
+//        //printf("%d ", atual->data);
+//        atual = atual->prev;
+//    }
 
     printf("\n");
     
