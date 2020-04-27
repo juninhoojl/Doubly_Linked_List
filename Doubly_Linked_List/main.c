@@ -27,8 +27,6 @@ int main(int argc, const char * argv[]){
     insert_end(lista, new_node(11));
     show_list(lista);
     
-    printf("Tamanho = %d\n",search_node(lista, 8)->next->data);
-    
     insert_after(lista, search_node(lista, 10), new_node(88));
     show_list(lista);
     
@@ -47,14 +45,9 @@ int main(int argc, const char * argv[]){
     }
     
     show_list(lista);
-    
-    //swap_nodes(lista, search_node(lista, 0), search_node(lista, 2));
-    //show_list(lista);
-    
     swap_nodes(lista, search_node(lista, 1), search_node(lista, 3));
-     show_list(lista);
+    show_list(lista);
     swap_nodes(lista, search_node(lista, 3), search_node(lista, 4));
-    //bubbleSort(lista);
     show_list(lista);
     swap_nodes(lista, search_node(lista, 3), search_node(lista, 4));
     show_list(lista);
@@ -62,7 +55,10 @@ int main(int argc, const char * argv[]){
     show_list(lista);
     swap_nodes(lista, search_node(lista, 2), search_node(lista, 9));
     show_list(lista);
-    bubbleSort(lista);
 
+    show_node(node_max(lista));
+    show_node(node_min(lista));
+    
+    
     return 0;
 }

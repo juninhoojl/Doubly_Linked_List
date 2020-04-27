@@ -13,6 +13,36 @@ void show_node(node * no){
     return;
 }
 
+
+node * node_min(hnode * cabeca){
+    
+    node * atual = cabeca->first;
+    node * min = cabeca->first;
+    
+    while(atual->next){
+        if(!compare_node(atual, atual->next)){
+            min = atual->next;
+        }
+        atual = atual->next;
+    }
+    
+    return min;
+}
+node * node_max(hnode * cabeca){
+    
+    node * atual = cabeca->first;
+    node * max = cabeca->first;
+    
+    while(atual->next){
+        if(compare_node(atual, atual->next)){
+            max = atual->next;
+        }
+        atual = atual->next;
+    }
+    
+    return max;
+}
+
 void swap_nodes(hnode * cabeca, node * first, node * second){
 
     node * aux = first->next;
